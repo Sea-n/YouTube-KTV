@@ -8,12 +8,16 @@
 ## 使用方式
 執行 `run.php` 及 `play.php` 兩個腳本
 
+## 需求
+* PHP
+* [https://mpv.io/](mpv)
+
 ## 設定範例
 `TOKEN` 您的金鑰
 ```
 12345:AAJqs_w-4
 ```
-請至 [@BotFather](https://t.me/BotFather)申請
+請至 [@BotFather](https://t.me/BotFather) 申請
 
 `chat-id` 操作、紀錄的群組
 ```
