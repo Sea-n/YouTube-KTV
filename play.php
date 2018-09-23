@@ -3,7 +3,7 @@ require("telegram.php");
 
 while (true) {
 	$list = trim(file_get_contents('queue'));
-	file_put_contents('queue', '');
+	rename('queue', 'now-playing');
 
 	if (!strlen($list)) {
 		$list = trim(file_get_contents('history'));
@@ -22,21 +22,29 @@ while (true) {
 	}
 
 	$queue = explode("\n", $list);
+	$count = count($queue);
 
-	echo "Playing " . count($queue) . " Songs\n\n";
+	echo "Playing $count Songs\n\n";
 
-	$text = "準備播放下一輪歌曲\n";
+	$text = "準備播放下一輪歌曲 (共 $count 首)";
 	foreach ($queue as $i => $line) {
+		if (!($i % 5))
+			$text .= "\n";
 		[$vid, $title] = explode(' ', $line, 2);
 		$text .= "\n$i. $title";
 	}
-	TG('sendMessage', [
+	$result = TG('sendMessage', [
 		'chat_id' => ChatID,
-		'text' => $text,
+		'text' => mb_substr($text, 0, 4000),
 		'disable_web_page_preview' => true
 	]);
+	TG('pinChatMessage', [
+		'chat_id' => ChatID,
+		'message_id' => $result['result']['message_id'],
+		'disable_notification' => true
+	]);
 
-	$cmd = "mpv -fs --screen=1";
+	$cmd = "mpv -fs --screen=1 --audio-delay=-0.1";
 	foreach ($queue as $line) {
 		[$vid, $title] = explode(' ', $line, 2);
 		$cmd .= " 'https://youtu.be/$vid'";
