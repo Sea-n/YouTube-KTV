@@ -13,13 +13,13 @@
 * [https://mpv.io/](mpv)
 
 ## 設定範例
-`TOKEN` 您的金鑰
+建立 `TOKEN` 檔案並填入您的金鑰
 ```
 12345:AAJqs_w-4
 ```
 請至 [@BotFather](https://t.me/BotFather) 申請
 
-`chat-id` 操作、紀錄的群組
+建立 `chat-id` 檔案並填入用來操作、紀錄的群組 ID
 ```
 -1001083843120
 ```
