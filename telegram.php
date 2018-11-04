@@ -36,4 +36,12 @@ function TG(string $method, array $query = []): array {
 	return $data;
 }
 
+function enHTML(string $str = ''): string {
+	$search =  array('&', '"', '<', '>');
+	$replace = array('&amp;', '&quot;', '&lt;', '&gt');
+	$str = str_replace($search, $replace, $str);
+	return $str;
+}
+
+
 define('ChatID', trim(file_get_contents('chat-id')));

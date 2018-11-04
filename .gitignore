@@ -1,5 +1,7 @@
 TOKEN
 chat-id
 queue
+now-playing
 history
 msg-id
+pin-id
