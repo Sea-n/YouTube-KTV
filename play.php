@@ -5,7 +5,7 @@ $param = join(' ', [
 	'--screen=1',
 	'--fullscreen',
 	'--slang=zh-TW,en,ja',
-	'--volume=50',
+	'--volume=100',
 	'--no-input-default-bindings',
 	'--no-input-terminal',
 	'--input-ipc-server=socket'

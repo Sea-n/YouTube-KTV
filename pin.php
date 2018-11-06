@@ -31,10 +31,7 @@ $payload = json_encode([
 		'playlist-pos'
 	]
 ]);
-$data = json_decode(shell_exec("echo '$payload' | socat - ./socket 2> /dev/null"), true);
-
-if (!isset($data['data'])) // socket: Connection refused
-	exit(1);
+$data = json_decode(shell_exec("echo '$payload' | socat - ./socket 2> /dev/null"), true) ?? 0;
 
 $pos = $data['data']; // Current position on playlist
 

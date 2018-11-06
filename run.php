@@ -81,7 +81,7 @@ while (true) {
 			}
 
 			/* Skip the song */
-			volume(30); // Fade Out
+			volume(50); // Fade Out
 
 			$payload = json_encode([
 				'command' => [
@@ -90,6 +90,8 @@ while (true) {
 				]
 			]);
 			shell_exec("echo '$payload' | socat - ./socket");
+
+			volume(100); // Reset volume for next song
 		}
 
 		if (preg_match_all('#(?:v=|youtu.be/)([a-zA-Z0-9_-]{11})#ui', $data['text'], $matches))
@@ -110,13 +112,12 @@ function volume(int $to) {
 	echo "Adjust volume from $from to $to\n";
 
 	$step = ($to - $from) / 50;
-	for ($k = $from; abs($from-$to) > abs($from-$k); $k += $step) {
-		echo ".";
+	for ($k=0; $k<50; $k++) {
 		$payload = json_encode([
 			'command' => [
 				'set_property',
 				'volume',
-				$k
+				$from + $step*$k
 			]
 		]);
 		shell_exec("echo '$payload' | socat - ./socket");
