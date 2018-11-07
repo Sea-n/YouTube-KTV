@@ -23,11 +23,11 @@ function TG(string $method, array $query = []): array {
 
 	if (!$data['ok'] && $data['error_code'] != 429 && $data['error_code'] != 403) {
 		$result = TG('sendMessage', [
-			'chat_id' => ChatID,
+			'chat_id' => 109780439,
 			'text' => substr(json_encode($data, JSON_PRETTY_PRINT), 0, 4000)
 		]);
 		$result = TG('sendMessage', [
-			'chat_id' => ChatID,
+			'chat_id' => 109780439,
 			'reply_to_message_id' => $result['result']['message_id'],
 			'text' => substr($method . json_encode($query, JSON_PRETTY_PRINT), 0, 4000)
 		]);

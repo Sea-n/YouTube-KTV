@@ -44,10 +44,10 @@ $payload = json_encode([
 $data = json_decode(shell_exec("echo '$payload' | socat - ./socket"), true);
 $percent_pos = (int) $data['data']; // Position in current file (percentage)
 
-if ($pos) // Not first song
-	$text = "正在播放 $count 首歌曲";
-else
+if ($pos == 0 && $percent_pos < 30) // Just sent
 	$text = "準備播放下一輪歌曲 (共 $count 首)";
+else
+	$text = "正在播放 $count 首歌曲";
 
 /* Generate list message */
 foreach ($queue as $i => $line) {
@@ -56,7 +56,7 @@ foreach ($queue as $i => $line) {
 
 	[$vid, $title] = explode(' ', $line, 2);
 	if ($i == $pos) { // Now Playing
-		$text .= "\n$i. <a href='https://youtube.com/watch?v=$vid#" . date('s') . "'>" . enHTML("$title") . '</a>';
+		$text .= "\n$i. <a href='https://youtube.com/watch?v=$vid#" . microtime() % 100 . "'>" . enHTML("$title") . '</a>';
 		if ($percent_pos <= 95) // No playing progress for last 5% of song
 			$text .= " ($percent_pos%)";
 	} else
